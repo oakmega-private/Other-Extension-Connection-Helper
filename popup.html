@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>BotFat 串接小幫手</title>
+    <style type="text/css">
+      @font-face {
+        font-family: 'Gen Jyuu Gothic';
+        src: url('./fonts/GenJyuuGothic-Regular.eot') format('embedded-opentype');
+        src: url('./fonts/GenJyuuGothic-Regular.woff') format('woff');
+        src: url('./fonts/GenJyuuGothic-Regular.woff2') format('woff2');
+        src: url('./fonts/GenJyuuGothic-Regular.woff2') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Gen Jyuu Gothic';
+        src: url('./fonts/GenJyuuGothic-Medium.eot') format('embedded-opentype');
+        src: url('./fonts/GenJyuuGothic-Medium.woff') format('woff');
+        src: url('./fonts/GenJyuuGothic-Medium.woff2') format('woff2');  
+        src: url('./fonts/GenJyuuGothic-Medium.ttf') format('truetype');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Gen Jyuu Gothic';
+        src: url('./fonts/GenJyuuGothic-Bold.eot') format('embedded-opentype');
+        src: url('./fonts/GenJyuuGothic-Bold.woff') format('woff');
+        src: url('./fonts/GenJyuuGothic-Bold.woff2') format('woff2');
+        src: url('./fonts/GenJyuuGothic-Bold.ttf') format('truetype');
+        font-weight: 700;
+        font-style: normal;
+      }
+      .popup-container {
+        margin: 0;
+        font-family: "Gen Jyuu Gothic";
+      }
+      .popup {
+        height: 640px;
+        box-sizing: border-box;
+        padding: 16px 24px;
+        position: relative;
+        font-size: 14px;
+        border-radius: 10px;
+        z-index: 1991;
+      }
+      .popup-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 32px;
+        margin-bottom: 12px;
+      }
+      .popup-navbar-logo {
+        width: 32px;
+        height: 32px;
+      }
+      .popup-navbar-right {
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+      .popup-navbar-icon {
+        width: 12px;
+        height: 12px;
+        padding: 6px;
+        margin-left: 8px;
+      }
+      .popup-navbar-ellipse:focus {
+        outline: none;
+      }
+      .popup-navbar-ellipse:focus ~ .popup-navbar-moreaction {
+        opacity: 1;
+        cursor: pointer;
+        z-index: 1993;
+      }
+      .popup-navbar-ellipse:focus ~ .popup-navbar-moreaction .popup-navbar-action-noclick {
+        display: flex;
+      }
+      .popup-navbar-icon:hover {
+        cursor: pointer;
+        background: #F0F0F0;
+        border-radius: 50%;
+      }
+      .popup-navbar-moreaction {
+        position: absolute;
+        top: 24px;
+        right: 0;
+        height: auto;
+        width: 138px;
+        padding: 12px 0;
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.150213), 0px 3px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+        background: white;
+        opacity: 0;
+      }
+      .popup-navbar-action-noclick {
+        display: none;
+      }
+      .popup-navbar-action-item {
+        display: flex;
+        align-items: center;
+        padding: 6px 12px;
+      }
+      .popup-navbar-action-redicon {
+        display: none;
+      }
+      .popup-navbar-action-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+      }
+      .popup-navbar-action-item:hover {
+        color: #FF6F61;;
+        background-color: rgba(255, 111, 97, 0.1);;
+      }
+      .popup-navbar-action-item:hover > .popup-navbar-action-blackicon {
+        display: none;
+      }
+      .popup-navbar-action-item:hover > .popup-navbar-action-redicon {
+        display: flex;
+      }
+      .popup-navbar-action-seperate {
+        margin: 12px;
+        height: 1px;
+        width: 114px;
+        background-color:rgba(0, 0, 0, 0.1);;
+      }
+      .popup-navbar-action-version {
+        padding: 0 12px;
+        color: rgba(0, 0, 0, 0.3);
+      }
+      .popup-start-btn-box {
+        display: none;
+      }
+      .popup-start-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 320px;
+        height: 56px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      .popup-activate-assistant {
+        background: #FF6F61;
+        color: white;
+      }
+      .popup-remove-assistant {
+        margin-top: 8px;
+      }
+      .popup-account-prev {
+        display: none;
+        align-items: center;
+        padding: 12px 16px;
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 6px;
+      }
+      .popup-account-badge {
+        margin: 0 4px 0 8px;
+      }
+      .popup-account-regrab {
+        display: none;
+        align-items: center;
+        padding: 6px 12px;
+      }
+      .popup-account-regrab-desc {
+        display: flex;
+        align-items: center;
+        color:  #FF6F61;
+      }
+      .popup-account-regrab-desc:hover {
+        cursor: pointer;
+      }
+      .popup-badge-blue {
+        display: none;
+      }
+      .popup-badge-green {
+        display: none;
+      }
+      .popup-account-head {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+      .popup-account-desc {
+        color: rgba(0, 0, 0, 0.3);
+      }
+      .popup-account-name {
+        color: rgba(0, 0, 0, 0.3)
+      }
+      .popup-instruct {
+        margin-bottom: 12px;
+      }
+      .popup-instruct-title {
+        margin-bottom: 4px;
+        font-weight: 500;
+      }
+      .popup-instruct.enter .popup-instruct-title {
+        font-size: 16px;
+      }
+      .popup-instruct.enter .popup-instruct-desc {
+        font-size: 14px;
+      }
+      .popup-instruct-title-step {
+        color: #FF6F61;
+      }
+      .popup-instruct-desc {
+        color: rgba(0, 0, 0, 0.3);
+        font-size: 12px;
+      }
+      .popup-gmail {
+        display: none;
+      }
+      .popup-gmail-title {
+        margin-bottom: 8px;
+      }
+      .popup-gmail-input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        border-radius: 6px;
+      }
+      .popup-gmail-input:focus {
+        outline: unset;
+      }
+      .popup-security-contract {
+        box-sizing: border-box;
+        height: 384px;
+        padding: 16px 24px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        overflow-y: scroll;
+        font-size: 12px;
+        display: none;
+        margin-bottom: 16px;
+      }
+      .popup-security-subtitle {
+        font-weight: bold;
+        padding: 12px 0;
+      }
+      .popup-security-item {
+        font-weight: 500;
+        color: #FF6F61;
+        cursor: pointer;
+      }
+      .popup-security-check {
+        display: none;
+        align-items: center;
+        margin-top: 16px;
+      }
+      .popup-security-circle {
+        margin-top: 0;
+        margin-right: 8px;
+        cursor: pointer;
+      }
+      .popup-security-label {
+        width: 100%;
+        margin-bottom: 0;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .popup-switch {
+        display: none;
+        justify-content: space-between;
+        margin-top: 140px;
+        margin-bottom: 16px;
+      }
+      .popup-switch-item {
+        box-sizing: border-box;
+        width: 158px;
+        height: 98px;
+        padding: 40px 8px;
+        text-align: center;
+        border: 1.5px solid rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        font-size: 12px;
+      }
+      .popup-switch-item:hover {
+        cursor: pointer;
+      }
+      .popup-switch-item.active {
+        background: rgba(255, 111, 97, 0.1);
+        border: 1.5px solid #FF6F61;
+      }
+      .popup-video-item {
+        display: none;
+        width: 320px;
+        height: 216px;
+      }
+      .popup-video-img {
+        width: 320px;
+        border-radius: 10px;
+        display: none;
+      }
+      .popup-step {
+        display: block;
+        padding: 0 12px;
+        margin-bottom: 24px;
+        border-radius: 6px;
+      }
+      .popup-step-item {
+        display: flex;
+        margin-bottom: 8px;
+      }
+      .popup-step-item:last-child {
+        margin-bottom: 0;
+      }
+      .popup-step-num {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 18px;
+        height: 18px;
+        line-height: 18px;
+        margin-right: 8px;
+        border-radius: 50%;
+        background: #FF6F61;
+        color: white;
+      }
+      .popup-step-green {
+        margin: 0 4px;
+        color: #20A471;
+      }
+      .popup-step-gray {
+        color: #AAAAAA;
+        border-bottom: solid 1px #AAAAAA;
+      }
+      .popup-step-gray:hover {
+        cursor: pointer;
+      }
+      .popup-alert {
+        display: none;
+        height: 66px;
+        align-items: center;
+        padding: 12px;
+        margin-bottom: 16px;border-radius: 6px;
+        background-color: #F0F0F0;
+      }
+      .popup-alert-light {
+        display: none;
+      }
+      .popup-alert-exclamation {
+        display: none;
+      }
+      .popup-alert-gray {
+        display: none;
+      }
+      .popup-alert-green {
+        display: none;
+      }
+      .popup-alert-icon {
+        display: none;
+        width: 20px;
+        height: 20px;
+        margin-right: 8px;
+      }
+      .popup-bottom-bar {
+        position: absolute;
+        justify-content: flex-end;
+        bottom: 16px;
+        right: 24px;
+        width: 320px;
+      }
+      .popup-bottom-btnbar {
+        display: flex;
+      }
+      .popup-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+      }
+      .popup-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80px;
+        height: 32px;
+        border-radius: 3px;
+      }
+      .popup-btn:hover {
+        cursor: pointer;
+      }
+      .popup-btn.disable {
+        background: rgba(0, 0, 0, 0.1);
+        color: rgba(0, 0, 0, 0.3);
+      }
+      .popup-btn.disable:hover {
+        cursor: default;
+      }
+      .popup-btn-primary {
+        background: #FF6F61;
+        color: white;        
+      }
+      .popup-btn-secondary {
+        color: #FF6F61;
+      }
+      .popup-btn-secondary:hover {
+        background: rgba(255, 111, 97, 0.1);
+      }
+      .popup-btn-goback {
+        margin-right: 8px;
+      }
+      .popup-btn-goback {
+        display: none;
+      }
+      .popup-bottom-dotbar {
+        display: flex;
+        align-items: center;
+        visibility: hidden;
+      }
+      .popup-bottom-dot{
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: 4px solid white;
+        margin-right: 4px;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+      .popup-bottom-dot.done {
+        background-color: #FF6F61;
+      }
+      .popup-bottom-dot.active {
+        border: 4px solid #ffe4e1;
+      }
+      .popup-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        background-color: white;
+        opacity: 0.9;
+        z-index: 2000;
+        text-align: center;
+      }
+      .popup-mask-icon {
+        height: 16px;
+        width: 16px;
+      }
+      .popup-mask-icon:hover {
+        cursor: pointer;
+      }
+      .popup-mask-icon-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 24px;
+        width: 24px;
+        position: absolute;
+        top: 24px;
+      }
+      .popup-mask-hover-desc {
+        display: none;
+        width: 50px;
+        margin-bottom: 4px;
+        position: absolute;
+        bottom: 24px;
+        background: rgba(0, 0, 0, 0.8);
+        font-size: 10px;
+        border-radius: 3px;
+        color: #ffffff;
+      }
+      .popup-mask-retry {
+        right: 56px;
+      }
+      .popup-mask-stop {
+        right: 24px;
+      }
+      .popup-mask-icon.black {
+        display: none;
+      }
+      .popup-mask-retry:hover > .popup-mask-retry-desc {
+        display: block
+      }
+      .popup-mask-retry:hover > .popup-mask-retry-gray {
+        display: none;
+      }
+      .popup-mask-retry:hover > .popup-mask-retry-black {
+        display: block;
+      }
+      .popup-mask-stop:hover > .popup-mask-stop-desc {
+        display: block
+      }
+      .popup-mask-stop:hover > .popup-mask-stop-black {
+        display: block;
+      }
+      .popup-mask-stop:hover > .popup-mask-stop-gray {
+        display: none;
+      }
+      .popup-mask-icon-wrap:hover {
+        background-color: #f0f0f0;
+        border-radius: 50%;
+      }
+      .popup-loading {
+        width: 150px;
+      }
+      .popup-topalert {
+        display: none;
+        position: absolute;
+        align-items: center;
+        left: 0;
+        bottom: 640px;
+        width: 100%;
+        height: 60px;
+        padding: 14px 32px;
+        box-sizing: border-box;
+        z-index: 2010;
+        animation: showup 1s linear;
+      }
+      .popup-topalert-icon {
+        margin-right: 16px;
+      }
+      .popup-success {
+        background: linear-gradient(0deg, rgba(33, 191, 85, 0.2), rgba(33, 191, 85, 0.2)), #FFFFFF;
+      }
+      .popup-fail {
+        background: linear-gradient(0deg, rgba(252, 82, 88, 0.2), rgba(252, 82, 88, 0.2)), #FFFFFF;;
+      }
+      @keyframes showup{
+        0% {
+          bottom: 640px;
+        }
+        20% {
+          bottom: 580px;
+        }
+        80% {
+          bottom: 580px
+        }
+        100% {
+          bottom: 640px;
+        }
+      }
+      .popup-send-err {
+        display: none;
+      }
+      .popup-send-err-title {
+        margin-bottom: 8px;
+      }
+      .popup-send-err-input {
+        width: 320px;
+        height: 200px;  
+        padding: 8px 16px;
+        border-radius: 6px;
+        box-sizing: border-box;
+        border: 1px solid rgba(0, 0, 0, 0.25);
+        resize: none;
+      }
+      .popup-send-err-restart {
+        margin-right: 8px;
+      }
+      .popup-send-err-input:focus {
+        outline: none;
+      }
+      .popup-send-err-input.email {
+        height: 34px;
+        margin-bottom: 16px;
+      }
+      .popup-send-err-input.email.alert {
+        border: 1px solid #FC5258;
+        margin-bottom: 0;
+      }
+      .popup-send-err-email-alert {
+        display: none;
+        height: 16px;
+        color: #FC5258;
+        font-size: 12px;
+      }
+      .popup-send-err-circle {
+        margin-right: 8px;
+      }
+      .popup-send-err-bar {
+        position: absolute;
+        bottom: 16px;
+        right: 24px;
+        width: 320px;
+        justify-content: flex-end;
+        align-items: center;
+      }
+      .popup-send-err-btnwrap {
+        display: none;
+      }
+      .popup-send-err-btnwrap-back {
+        display: none;
+      }
+      .popup-send-err-back {
+        margin-right: 8px;
+      }
+      .popup-send-err-record {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        margin-top: 16px;
+        background: rgba(255, 111, 97, 0.1);
+        border: 1px solid #FF6F61;
+        border-radius: 6px;
+      }
+      .popup-send-err-record img {
+        margin-right: 8px;
+      }
+      .popup-end {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 564px;
+      }
+      .popup-end-word {
+        position: relative;
+        margin-top: 32px;
+        margin-bottom: 48px;
+      }
+      .popup-end-confetti {
+        display: none;
+        position: absolute;
+        top: 0;
+      }
+      .popup-end-above-item {
+        display: flex;
+        align-items: center;
+        z-index: 10;
+      }
+      .popup-end-userhead {
+        width: 42px;
+        height: 42px;
+        margin-left: 4px;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body class="popup-container">
+    <div class="popup">
+      <div class="popup-navbar">
+        <img class="popup-navbar-logo" src="./img/botfat.png">
+        <div class="popup-navbar-right">
+          <img src="./img/ellipse.svg" class="popup-navbar-icon popup-navbar-ellipse" tabindex="0">
+          <div class="popup-navbar-moreaction">
+            <div class="popup-navbar-action-item popup-action-restart">
+              <img src="./img/reload_red.svg" class="popup-navbar-action-redicon popup-navbar-action-icon">
+              <img src="./img/reload.svg" class="popup-navbar-action-blackicon popup-navbar-action-icon">
+              重新開始
+            </div>
+            <div class="popup-navbar-action-item popup-navbar-mail popup-action-feedback">
+              <img src="./img/email_red.svg" class="popup-navbar-action-redicon popup-navbar-action-icon">
+              <img src="./img/email.svg" class="popup-navbar-action-blackicon popup-navbar-action-icon">
+              意見回饋
+            </div>
+            <div class="popup-navbar-action-item popup-action-praise">
+              <img src="./img/thumb_red.svg" class="popup-navbar-action-redicon popup-navbar-action-icon">
+              <img src="./img/thumb.svg" class="popup-navbar-action-blackicon popup-navbar-action-icon">
+              給小幫手好評
+            </div>
+            <div class="popup-navbar-action-seperate popup-navbar-action-noclick"></div>
+            <div class="popup-navbar-action-version popup-navbar-action-noclick">Version 0.0.1</div> 
+          </div>
+          <img src="./img/close.svg" class="popup-navbar-icon popup-close">
+        </div>
+      </div>
+      <div class="popup-instruct">
+        <div class="popup-instruct-title"></div>
+        <div class="popup-instruct-desc"></div>
+      </div>
+      <div class="popup-start-btn-box">
+        <div class="popup-activate-assistant popup-start-btn">點擊啓用 BotFat 串接小幫手</div>
+        <div class="popup-remove-assistant popup-start-btn popup-btn-secondary">我已串接過了，卸載此擴充</div>
+      </div>
+      <div class="popup-security-contract">
+        歡迎使用 Chrome 的擴充功能：BotFat 串接小幫手。
+        本工具是協助您迅速完成 BotFat 後台的串接流程，為了讓您能夠安心使用本服務，特此向您說明本服務的隱私權保護政策，以保障您的權益。
+        請您詳閱下列內容，確認無誤後再開始本服務：
+        <div class="popup-security-subtitle">一、隱私權保護政策的適用範圍</div>
+        隱私權保護政策內容，包括本服務如何處理在您使用網站服務時收集到的個人識別資料。隱私權保護政策不適用於本服務以外的相關連結網站，也不適用於非本服務所委託或參與管理的人員。
+        <div class="popup-security-subtitle">二、個人資料的蒐集、處理及利用方式</div>
+        當您使用本服務時，我們將請您提供必要的帳號資料，並輔助您填寫串接過程中必要之資料。服務所取得的帳號資料僅限於串接至 BotFat 產品後台使用；非經您書面同意，本服務不會將帳號資料用於其他用途。
+        <div class="popup-security-subtitle">三、資料之保護</div>
+        BotFat 網站主機均設有防火牆、防毒系統等相關的各項資訊安全設備及必要的安全防護措施，加以保護網站及您的個人資料採用嚴格的保護措施，只由經過授權的人員才能接觸您的個人資料，相關處理人員皆簽有保密合約，如有違反保密義務者，將會受到相關的法律處分。
+        如因業務需要有必要委託其他單位提供服務時，本服務會嚴格要求其遵守保密義務，並且採取必要檢查程序以確定其將確實遵守。
+        <div class="popup-security-subtitle">四、網站對外的相關連結</div>
+        本服務的網頁提供其他網站的網路連結，您也可經由本網站所提供的連結，點選進入其他網站。但該連結網站不適用本網站的隱私權保護政策，您必須參考該連結網站中的隱私權保護政策。
+        <div class="popup-security-subtitle">五、與第三人共用個人資料之政策</div>
+        本服務絕不會提供、交換、出租或出售任何您的個人資料給其他個人、團體、私人企業或公務機關，但有法律依據或合約義務者，不在此限。
+        前項但書之情形包括不限於：
+        <ul>
+        <li>經由您書面同意。</li>
+        <li>法律明文規定。</li>
+        <li>為免除您生命、身體、自由或財產上之危險。</li>
+        <li>與公務機關或學術研究機構合作，基於公共利益為統計或學術研究而有必要，且資料經過提供者處理或蒐集著依其揭露方式無從識別特定之當事人。</li>
+        <li>當您在網站的行為，違反服務條款或可能損害或妨礙網站與其他使用者權益或導致任何人遭受損害時，經網站管理單位研析揭露您的個人資料是為了辨識、聯絡或採取法律行動所必要者。</li>
+        <li>有利於您的權益。</li>
+        </ul>
+        <div class="popup-security-subtitle">六、Cookie之使用</div>
+        本串接服務不會使用 Cookie 儲存您的個人資料。
+        <div class="popup-security-subtitle">七、隱私權保護政策之修正</div>
+        隱私權保護政策將因應需求隨時進行修正，修正後的條款會刊登於此串接工具上。
+      </div>
+      <div class="popup-security-check">
+        <input type="radio" id="security" class="popup-security-circle"><label for="security" class="popup-security-label" id="security-label">我已經詳讀並同意 <span class="popup-security-item">BotFat 隱私權保護政策</span></label>
+      </div>
+      <div class="popup-alert">
+        <img src="./img/light.svg" class="popup-alert-light popup-alert-icon">
+        <img src="./img/alert.svg" class="popup-alert-exclamation popup-alert-icon">
+        <img src="./img/gray_alert.svg" class="popup-alert-gray popup-alert-icon">
+        <img src="./img/green_light.svg" class="popup-alert-green popup-alert-icon">
+        <div class="popup-alert-desc"></div>
+      </div>
+      <div class="popup-send-err">
+        <div class="popup-send-err-title">內容</div>
+        <textarea class="popup-send-err-input" placeholder="簡短說明發生的情況（選填）"></textarea>
+        <div class="popup-send-err-record">
+          <img src="./img/red_circle.svg" >
+            同時傳送系統記錄
+        </div>
+      </div>
+      <div class="popup-video" >
+        <div class="popup-video-item">
+          <img src="https://storage.googleapis.com/botfat-private/google_extension/provider.png" class="popup-video-img popup-video-img-provider">
+          <img src="https://storage.googleapis.com/botfat-private/google_extension/account.png" class="popup-video-img popup-video-img-account">
+        </div>
+      </div>
+      <div class="popup-step">
+      </div>
+      <div class="popup-account-prev">
+        <img src="./img/person.svg" class="popup-account-head">
+        <img src="./img/badge_grey.svg" class="popup-account-badge popup-badge-gray">
+        <img src="./img/badge_green.svg"
+        class="popup-account-badge popup-badge-green">
+        <img src="./img/badge_blue.svg" class="popup-account-badge popup-badge-blue">
+        <div class="popup-account-name">請開啟要串接的官方帳號</div>
+      </div>
+      <div class="popup-account-regrab">
+        <div>帳號顯示有誤嗎？</div>
+        <div class="popup-account-regrab-desc">重新整理<img src="./img/reload_red.svg"></div></div>
+      <div class="popup-bottom popup-bottom-bar">
+        <div class="popup-bottom-dotbar">
+          <div id="dot-1" class="popup-bottom-dot"></div>
+          <div id="dot-2" class="popup-bottom-dot"></div>
+          <div id="dot-3" class="popup-bottom-dot"></div>
+        </div>
+        <div class="popup-bottom-btnbar">
+          <div class="popup-btn popup-btn-secondary popup-btn-goback" id="back">返回</div>
+          <div class="popup-btn popup-btn-primary popup-btn-control" id="security">下一步</div>          
+        </div>
+      </div>
+      <div class="popup-send-err-btnwrap popup-send-err-bar">
+        <div class="popup-btn popup-btn-secondary popup-send-err-back">返回</div>
+        <div class="popup-btn popup-btn-primary popup-send-err-report">傳送</div>
+      </div>
+      <div class="popup-send-err-btnwrap-back popup-send-err-bar">
+        <div class="popup-btn popup-btn-secondary popup-send-err-restart">重新開始</div>
+        <div class="popup-btn popup-btn-primary popup-send-err-close">結束串接</div>
+      </div>
+      <div class="popup-action-status"></div>
+      <div class="popup-mask">
+        <div class="popup-mask-icon-wrap popup-mask-retry">
+          <div class="popup-mask-retry-desc popup-mask-hover-desc">重新整理</div>
+          <img src="./img/retry.svg" class="popup-mask-icon popup-mask-retry-gray">
+          <img src="./img/retry_black.svg" class="popup-mask-icon black popup-mask-retry-black">
+        </div>
+        <div class="popup-mask-icon-wrap popup-mask-stop">
+          <img src="./img/stop.svg" class="popup-mask-icon popup-mask-stop-gray gray">
+          <img src="./img/stop_black.svg" class="popup-mask-icon popup-mask-stop-black black">
+          <div class="popup-mask-stop-desc popup-mask-hover-desc">我要報錯</div>
+        </div>
+        <img src="./img/loading.svg" class="popup-loading">
+        <div class="popup-loading-desc">資料抓取中，請稍候...<br>自動化串接中，網頁畫面會自動跳轉數次，請稍候...</div>
+      </div>
+      <div class="popup-success popup-topalert">
+        <img src="./img/success.svg" class="popup-topalert-icon">
+        <div class="popup-success-word">連結成功</div>
+      </div>
+      <div class="popup-fail popup-topalert">
+        <img src="./img/fail.svg" class="popup-topalert-icon">
+        <div class="popup-fail-word">連結失敗</div>
+      </div>
+      <div class="popup-end">
+        <img src="./img/confetti.svg" class="popup-end-confetti">
+        <div class="popup-end-above-item">
+          <img src="./img/botfat&line.svg" class="popup-end-icon">
+          <img src="./img/lineAccountLogo.svg" class="popup-end-userhead">  
+        </div>
+        <div class="popup-end-word">
+          串接成功！開始使用 BotFat 吧！
+        </div>
+        <div class="popup-end-close popup-btn-primary popup-btn popup-end-above-item">關閉視窗</div>
+      </div>
+    </div>
+    <script type="text/javascript" src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+      <svg width="600px" height="600px" viewBox="0 0 660 660" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g id="Re-design" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="export" transform="translate(-480.000000, -143.000000)">
+            <g id="Logo/大橡科技/Coral-(default)" transform="translate(590.000000, 308.000000)">
+              <g id="Elephant">
+                <path d="M440,220.733333 C380.556461,220.733333 106.948803,220.733333 0,220.733333 C0,98.8256796 98.497355,0 220,0 C341.502645,0 440,98.8256796 440,220.733333 Z M0,220.733333 L440,220.733333 L440,319.532976 C440,325.313754 435.313754,330 429.532976,330 C423.752199,330 419.065952,325.313754 419.065952,319.532976 L419.065952,304.258012 C419.065952,298.749766 414.600637,294.28445 409.09239,294.28445 C403.584144,294.28445 399.118828,298.749766 399.118828,304.258012 L399.118828,312.142225 C399.118828,322.004802 391.12363,330 381.261053,330 L4.4,330 C1.9699471,330 0,328.030053 0,325.6 L0,220.733333 Z" id="Body" fill="#FF6F61"></path>
+
+                <path d="M220.733333,94.6 C266.094321,94.6 302.866667,131.372346 302.866667,176.733333 C302.866667,222.094321 266.094321,258.866667 220.733333,258.866667 L143,258.866667 C140.569947,258.866667 138.6,256.89672 138.6,254.466667 C138.6,232.955556 138.6,207.044444 138.6,176.733333 C138.6,131.266667 175.372346,94.6 220.733333,94.6 Z" id="big_ear_rotate" fill="#4D1D1D"></path>
+
+                <animateTransform attributeName="transform"
+                  attributeType="XML"
+                  xlink:href="#big_ear_rotate"
+                  type="rotate"
+                  from="0 220.73 176.73"
+                  to="360 220.73 176.73"
+                  dur="1s"
+                  repeatCount="indefinite"/>
+
+                <animate attributeName="opacity"
+									values="1; 0.3; 1"
+									keyTimes="0; 0.5; 1"
+									dur="1.5s"
+									xlink:href="#Body"
+									repeatCount="indefinite"/>
+
+                <rect id="Line3" fill="#FF6F61" x="181.866667" y="198.733333" width="77" height="5.86666667" rx="2.93333333"></rect>
+                <rect id="Line2" fill="#FF6F61" x="181.866667" y="174.533333" width="77" height="5.86666667" rx="2.93333333"></rect>
+                <rect id="Line1" fill="#FF6F61" x="181.866667" y="150.333333" width="77" height="5.86666667" rx="2.93333333"></rect>
+                <circle id="Eye" fill="#4D1D1D" cx="365.933333" cy="167.933333" r="8.06666667"></circle>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
