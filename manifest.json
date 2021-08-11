@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "BotFat 串接小幫手",
-  "description": "快速串接 BotFat 帳號",
-  "version": "1.0.0",
+  "name": "OakMega 串接小幫手",
+  "description": "快速串接 OakMega 帳號",
+  "version": "1.1.0",
   "icons": {
     "16": "./img/botfat.png",
     "48": "./img/botfat.png",
@@ -13,7 +13,7 @@
     "persistent": false
   },
   "browser_action": {
-    "default_title":"BotFat 自動串接",
+    "default_title":"OakMega 自動串接",
     "default_icon": "./img/botfat.png"
   },
   "content_scripts": [

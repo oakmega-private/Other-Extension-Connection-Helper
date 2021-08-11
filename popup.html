@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>BotFat 串接小幫手</title>
+    <title>OakMega 串接小幫手</title>
     <style type="text/css">
       @font-face {
         font-family: 'Gen Jyuu Gothic';
@@ -166,7 +166,6 @@
         padding: 6px 12px;
       }
       .popup-account-regrab-desc {
-        display: flex;
         align-items: center;
         color:  #FF6F61;
       }
@@ -656,7 +655,7 @@
               給小幫手好評
             </div>
             <div class="popup-navbar-action-seperate popup-navbar-action-noclick"></div>
-            <div class="popup-navbar-action-version popup-navbar-action-noclick">Version 0.0.1</div> 
+            <div class="popup-navbar-action-version popup-navbar-action-noclick">Version 1.1.0</div> 
           </div>
           <img src="./img/close.svg" class="popup-navbar-icon popup-close">
         </div>
@@ -666,19 +665,19 @@
         <div class="popup-instruct-desc"></div>
       </div>
       <div class="popup-start-btn-box">
-        <div class="popup-activate-assistant popup-start-btn">點擊啓用 BotFat 串接小幫手</div>
+        <div class="popup-activate-assistant popup-start-btn">點擊啟用 OakMega 串接小幫手</div>
         <div class="popup-remove-assistant popup-start-btn popup-btn-secondary">我已串接過了，卸載此擴充</div>
       </div>
       <div class="popup-security-contract">
-        歡迎使用 Chrome 的擴充功能：BotFat 串接小幫手。
-        本工具是協助您迅速完成 BotFat 後台的串接流程，為了讓您能夠安心使用本服務，特此向您說明本服務的隱私權保護政策，以保障您的權益。
+        歡迎使用 Chrome 的擴充功能：OakMega 串接小幫手。
+        本工具是協助您迅速完成 OakMega 後台的串接流程，為了讓您能夠安心使用本服務，特此向您說明本服務的隱私權保護政策，以保障您的權益。
         請您詳閱下列內容，確認無誤後再開始本服務：
         <div class="popup-security-subtitle">一、隱私權保護政策的適用範圍</div>
         隱私權保護政策內容，包括本服務如何處理在您使用網站服務時收集到的個人識別資料。隱私權保護政策不適用於本服務以外的相關連結網站，也不適用於非本服務所委託或參與管理的人員。
         <div class="popup-security-subtitle">二、個人資料的蒐集、處理及利用方式</div>
-        當您使用本服務時，我們將請您提供必要的帳號資料，並輔助您填寫串接過程中必要之資料。服務所取得的帳號資料僅限於串接至 BotFat 產品後台使用；非經您書面同意，本服務不會將帳號資料用於其他用途。
+        當您使用本服務時，我們將請您提供必要的帳號資料，並輔助您填寫串接過程中必要之資料。服務所取得的帳號資料僅限於串接至 OakMega 產品後台使用；非經您書面同意，本服務不會將帳號資料用於其他用途。
         <div class="popup-security-subtitle">三、資料之保護</div>
-        BotFat 網站主機均設有防火牆、防毒系統等相關的各項資訊安全設備及必要的安全防護措施，加以保護網站及您的個人資料採用嚴格的保護措施，只由經過授權的人員才能接觸您的個人資料，相關處理人員皆簽有保密合約，如有違反保密義務者，將會受到相關的法律處分。
+        OakMega 網站主機均設有防火牆、防毒系統等相關的各項資訊安全設備及必要的安全防護措施，加以保護網站及您的個人資料採用嚴格的保護措施，只由經過授權的人員才能接觸您的個人資料，相關處理人員皆簽有保密合約，如有違反保密義務者，將會受到相關的法律處分。
         如因業務需要有必要委託其他單位提供服務時，本服務會嚴格要求其遵守保密義務，並且採取必要檢查程序以確定其將確實遵守。
         <div class="popup-security-subtitle">四、網站對外的相關連結</div>
         本服務的網頁提供其他網站的網路連結，您也可經由本網站所提供的連結，點選進入其他網站。但該連結網站不適用本網站的隱私權保護政策，您必須參考該連結網站中的隱私權保護政策。
@@ -699,7 +698,7 @@
         隱私權保護政策將因應需求隨時進行修正，修正後的條款會刊登於此串接工具上。
       </div>
       <div class="popup-security-check">
-        <input type="radio" id="security" class="popup-security-circle"><label for="security" class="popup-security-label" id="security-label">我已經詳讀並同意 <span class="popup-security-item">BotFat 隱私權保護政策</span></label>
+        <input type="radio" id="security" class="popup-security-circle"><label for="security" class="popup-security-label" id="security-label">我已經詳讀並同意 <span class="popup-security-item">OakMega 隱私權保護政策</span></label>
       </div>
       <div class="popup-alert">
         <img src="./img/light.svg" class="popup-alert-light popup-alert-icon">
@@ -733,8 +732,9 @@
         <div class="popup-account-name">請開啟要串接的官方帳號</div>
       </div>
       <div class="popup-account-regrab">
-        <div>帳號顯示有誤嗎？</div>
-        <div class="popup-account-regrab-desc">重新整理<img src="./img/reload_red.svg"></div></div>
+        <span>帳號顯示有誤嗎？請前往你要串接的 LINE OA 頁面並點此</span>
+        <span class="popup-account-regrab-desc">重新整理<img src="./img/reload_red.svg"></span>
+      </div>
       <div class="popup-bottom popup-bottom-bar">
         <div class="popup-bottom-dotbar">
           <div id="dot-1" class="popup-bottom-dot"></div>
@@ -784,7 +784,7 @@
           <img src="./img/lineAccountLogo.svg" class="popup-end-userhead">  
         </div>
         <div class="popup-end-word">
-          串接成功！開始使用 BotFat 吧！
+          串接成功！開始使用 OakMega 吧！
         </div>
         <div class="popup-end-close popup-btn-primary popup-btn popup-end-above-item">關閉視窗</div>
       </div>

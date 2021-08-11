@@ -29,10 +29,10 @@ chrome.browserAction.onClicked.addListener(setInit)
 const instruction = {
   beforeStart: {
     title: '快速串接您的 LINE 官方帳號',
-    desc:'一站式完成會員管理與建立 Chatbot<br>掌握客戶服務，創造無限對話新商機！'
+    desc:'OakMega Social CRM 一次幫你實現業務、行銷與客服的各種情境！'
   },
   security: {
-    title:'BotFat 串接小幫手 隱私權保護政策',
+    title:'OakMega 串接小幫手 隱私權保護政策',
     desc:'我們非常重視您的個人隱私，並請您詳細閱讀以下有關隱私權保護政策的更多內容。'
   },
   openAccount: {
@@ -44,11 +44,11 @@ const instruction = {
     desc: ''
   },
   toBotFat: {
-    title:  '登入 BotFat（<span class="popup-instruct-title-step">1</span>/3）',
+    title:  '登入 OakMega（<span class="popup-instruct-title-step">1</span>/3）',
     desc:''
   },
   complete: {
-    title:  '🎉 串接成功！開始使用 BotFat 吧！',
+    title:  '🎉 串接成功！開始使用 OakMega 吧！',
     desc: ''
   },
   report: {
@@ -67,7 +67,7 @@ const instruction = {
 const stepContent = {
   account: "<div class='popup-step-item'><div class='popup-step-num'>1</div><div>開啟要串接的<span class='popup-step-green'>LINE 官方帳號</span></div></div><div class='popup-step-item'><div class='popup-step-num'>2</div><div>確認以下官方帳號是否正確</div></div>",
   provider: "<div class='popup-step-item'><div class='popup-step-num'>1</div><div>請設定<span class='popup-step-green'>Provider 名稱</span><br>（此官方帳號的提供者為個人還是公司）</div></div><div class='popup-step-item'><div class='popup-step-num'>2</div><div>填寫<span class='popup-step-green'>隱私權網址</span>與<span class='popup-step-green'>服務條款</span><br>（選填，之後可更改）</div></div>",
-  BotFat:  "<div class='popup-step-item'><div class='popup-step-num'>1</div><div>使用 Google 帳號登入 BotFat 後台</div></div><div class='popup-step-item'><div class='popup-step-num'>2</div><div>確認登入的 Google 帳號正確無誤</div></div>"
+  BotFat:  "<div class='popup-step-item'><div class='popup-step-num'>1</div><div>使用 Google 帳號登入 OakMega 後台</div></div><div class='popup-step-item'><div class='popup-step-num'>2</div><div>確認登入的 Google 帳號正確無誤</div></div>"
 }
 
 let nextBtn = document.querySelector('.popup-btn-control')
@@ -353,7 +353,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       showDuplicate()
       break;
     case 'notLoginYet':
-      showTopAlert('error', '連結失敗，請登入 BotFat 後再試')
+      showTopAlert('error', '連結失敗，請登入 OakMega 後再試')
       break;
     case 'grabAccountInfo':
       const data = request.data
@@ -429,13 +429,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       break;
     case 'liffComplete':
       chrome.storage.local.set({stage: 'liffId'}, function() {
-        showTopAlert('success', '開設 liff 成功')
+        showTopAlert('success', '開設 LIFF 成功')
         setTimeout(getLiffId, 1500)
       })
       break;
     case 'getLiffIdComplete':
       chrome.storage.local.set({stage: 'publish', line_login_liff_id: request.id}, function() {
-        showTopAlert('success', '抓取 Liff id 成功')
+        showTopAlert('success', '抓取 LIFF id 成功')
         setTimeout(setPublish, 1500)
       })
       break
@@ -443,15 +443,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       chrome.storage.local.set({stage: 'goingToBotfat'}, function() {
         showTopAlert('success', 'Login 發布成功')
         setTimeout(function() {
-          redirectUrl('https://botfat.com/home/connecting')
+          redirectUrl('https://botfat.com/home/onboarding/extension')
         }, 1500)
-        redirectUrl('https://botfat.com/home/connecting')
+        redirectUrl('https://botfat.com/home/onboarding/extension')
       })
       break;
     case 'connectBotFatUrlError':
       showTopAlert('error','連結錯誤')
       setTimeout(function() {
-        redirectUrl('https://botfat.com/home/connecting')
+        redirectUrl('https://botfat.com/home/onboarding/extension')
       }, 1000)
       break;
     case 'createSuccess':
@@ -532,7 +532,7 @@ function showDuplicate() {
     { selector: '.popup-send-err-btnwrap-back', state: 'flex' }
   ])
   document.querySelector('.popup-send-err-btnwrap-back', 'flex')
-  document.querySelector('.popup-alert-desc').innerText = '一個 BotFat 帳號只能連接一個 LINE 官方帳號喔！'  
+  document.querySelector('.popup-alert-desc').innerText = '一個 OakMega 帳號只能連接一個 LINE 官方帳號喔！'  
   showInstruct('duplicate')
   document.querySelector('.popup-send-err-restart').addEventListener('click', function() {
     restart()
@@ -548,7 +548,7 @@ function chooseAccount() {
   showItem([
     { selector: '.popup-video-item' },
     { selector: '.popup-video-img-account' },
-    { selector: '.popup-account-regrab', state: 'flex' },
+    { selector: '.popup-account-regrab', state: 'block' },
     { selector: '.popup-btn-goback', state: 'flex' }
   ])
   document.querySelector('.popup-account-regrab').addEventListener('click', detectAccountInfo)
@@ -578,7 +578,7 @@ function chooseAccount() {
 
 function detectAccountInfo() {
   getCurrentTabId(tabId => {
-    var port = chrome.tabs.connect(tabId, {name: 'detectAccount'});
+    let port = chrome.tabs.connect(tabId, {name: 'detectAccount'});
     port.onMessage.addListener(function(res) {
       if (res.length > 1) {
         chrome.storage.local.set({name: res[0], line_id: res[1], badge: res[2], head: res[3]})
@@ -611,7 +611,7 @@ function setProvider() {
     { selector: '.popup-video-img-provider' },
     { selector: '.popup-video-item'}
   ])
-  showAlert('light','已開啓過 Messaging API 請直接前往下一步')
+  showAlert('light','已開啟過 Messaging API 請直接前往下一步')
   setBtnId('provider')
   setProgress(3)
 }
@@ -622,12 +622,12 @@ function setResponse() {
 }
 
 function getProviderList() {
-  autoLoading('自動化串接中，網頁畫面會自動跳轉數次，請稍候')
+  autoLoading('自動化串接中，網頁畫面會自動跳轉數次，請稍候(1/2)')
   connectPort('getProviderList')
 }
 
 function detectProvider() {
-  autoLoading('自動化串接中，網頁畫面會自動跳轉數次，請稍候')
+  autoLoading('自動化串接中，網頁畫面會自動跳轉數次，請稍候(2/2)')
   chrome.storage.local.get(['name'], function(info) {
     goIntoProvider(info.name)
   })
@@ -707,7 +707,7 @@ function gotoBotFat() {
   showInstruct('toBotFat')
   setBtnId('toLineOA')
   showStep('BotFat')
-  showAlert('light', '如已登入 BotFat ，請直接前往下一步')
+  showAlert('light', '如已登入 OakMega ，請直接前往下一步')
   showItem([
     { selector: '.popup-btn-goback', state: 'flex' },
     { selector: '.popup-navbar-ellipse' }
@@ -716,7 +716,7 @@ function gotoBotFat() {
   setProgress(1)
 }
 function sendInfoAndSend() {
-  autoLoading('正在將資料傳送到 BotFat ......')
+  autoLoading('正在將資料傳送到 OakMega ......')
   chrome.storage.local.get(['name','line_id','line_secret','line_token','line_login_channel_id','line_login_secret','line_login_liff_id'], function(info) {
     const postdata = {
       name: info.name,

@@ -301,7 +301,7 @@ function setNewLogin(name) {
             })
             break;
           case 'Channel name':
-            block.querySelector('textarea').value = `${name} Login`
+            block.querySelector('textarea').value = `${name} Login`.slice(0,20)
             block.querySelector('textarea').dispatchEvent(new Event('input'))
             break;
           case 'Channel description':
@@ -558,7 +558,7 @@ function setPublish() {
 }
 function verifyBotfatLogin() {
   if (document.readyState == 'complete') {
-    if (window.location.href === 'https://botfat.com/home/onboarding/' || window.location.href === 'https://botfat.com/home/onboarding' || window.location.href == 'https://botfat.com/home/connecting' || window.location.href == 'https://botfat.com/home/connecting/') {
+    if (window.location.href.includes('https://botfat.com/home/onboarding')) {
       const uuid = localStorage.getItem('onboarding_uuid')
       const gmail = localStorage.getItem('login_user_email')
       chrome.runtime.sendMessage({ 
@@ -581,7 +581,7 @@ function verifyBotfatLogin() {
 }
 function toConnection(data) {
   if (document.readyState == 'complete') {
-    if (window.location.href == 'https://botfat.com/home/connecting' || window.location.href == 'https://botfat.com/home/connecting/') {
+    if (window.location.href == 'https://botfat.com/home/onboarding/extension' || window.location.href == 'https://botfat.com/home/onboarding/extension/') {
       const info = JSON.parse(data)
       enterValue('#name input', info.name)
       enterValue('#line-id input', `@${info.line_id}`)
