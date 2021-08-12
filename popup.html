@@ -466,9 +466,12 @@
         color: #ffffff;
       }
       .popup-mask-retry {
-        right: 56px;
+        right: 88px;
       }
       .popup-mask-stop {
+        right: 56px;
+      }
+      .popup-mask-close {
         right: 24px;
       }
       .popup-mask-icon.black {
@@ -490,6 +493,15 @@
         display: block;
       }
       .popup-mask-stop:hover > .popup-mask-stop-gray {
+        display: none;
+      }
+      .popup-mask-close:hover > .popup-mask-close-desc {
+        display: block
+      }
+      .popup-mask-close:hover > .popup-mask-close-black {
+        display: block;
+      }
+      .popup-mask-close:hover > .popup-mask-close-gray {
         display: none;
       }
       .popup-mask-icon-wrap:hover {
@@ -655,7 +667,7 @@
               給小幫手好評
             </div>
             <div class="popup-navbar-action-seperate popup-navbar-action-noclick"></div>
-            <div class="popup-navbar-action-version popup-navbar-action-noclick">Version 1.1.0</div> 
+            <div class="popup-navbar-action-version popup-navbar-action-noclick">Version 1.1.2</div> 
           </div>
           <img src="./img/close.svg" class="popup-navbar-icon popup-close">
         </div>
@@ -765,6 +777,11 @@
           <img src="./img/stop.svg" class="popup-mask-icon popup-mask-stop-gray gray">
           <img src="./img/stop_black.svg" class="popup-mask-icon popup-mask-stop-black black">
           <div class="popup-mask-stop-desc popup-mask-hover-desc">我要報錯</div>
+        </div>
+        <div class="popup-mask-icon-wrap popup-mask-close">
+          <div class="popup-mask-close-desc popup-mask-hover-desc">關閉視窗</div>
+          <img src="./img/close.svg" class="popup-mask-icon popup-mask-close-gray">
+          <img src="./img/close.svg" class="popup-mask-icon black popup-mask-close-black">
         </div>
         <img src="./img/loading.svg" class="popup-loading">
         <div class="popup-loading-desc">資料抓取中，請稍候...<br>自動化串接中，網頁畫面會自動跳轉數次，請稍候...</div>

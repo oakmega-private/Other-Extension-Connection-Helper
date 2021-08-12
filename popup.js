@@ -67,7 +67,7 @@ const instruction = {
 const stepContent = {
   account: "<div class='popup-step-item'><div class='popup-step-num'>1</div><div>開啟要串接的<span class='popup-step-green'>LINE 官方帳號</span></div></div><div class='popup-step-item'><div class='popup-step-num'>2</div><div>確認以下官方帳號是否正確</div></div>",
   provider: "<div class='popup-step-item'><div class='popup-step-num'>1</div><div>請設定<span class='popup-step-green'>Provider 名稱</span><br>（此官方帳號的提供者為個人還是公司）</div></div><div class='popup-step-item'><div class='popup-step-num'>2</div><div>填寫<span class='popup-step-green'>隱私權網址</span>與<span class='popup-step-green'>服務條款</span><br>（選填，之後可更改）</div></div>",
-  BotFat:  "<div class='popup-step-item'><div class='popup-step-num'>1</div><div>使用 Google 帳號登入 OakMega 後台</div></div><div class='popup-step-item'><div class='popup-step-num'>2</div><div>確認登入的 Google 帳號正確無誤</div></div>"
+  BotFat:  "<div class='popup-step-item'><div class='popup-step-num'>1</div><div>使用 Google 帳號登入 OakMega 後台</div></div><div class='popup-step-item'><div class='popup-step-num'>2</div><div>確認登入的 Google 帳號正確無誤</div></div><div class='popup-step-item'><div class='popup-step-num'>3</div><div>確認已輸入過邀請碼並點擊確認</div></div>"
 }
 
 let nextBtn = document.querySelector('.popup-btn-control')
@@ -271,6 +271,10 @@ function retryStep() {
           case 'send':
             detectUrlAndRetry(url, `https://developers.line.biz/console/channel/${info.line_login_channel_id}/liff`)
             break
+          default:
+            console.log("RESTART")
+            restart()
+            break
         }
       })          
     })
@@ -347,6 +351,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           redirectUrl('https://manager.line.biz/')
         }, 1500)
       })
+      break;
+    case 'inputInviteCode':
+      showTopAlert('error', '請先輸入邀請碼')
       break;
     case 'hasCreatedAccount':
       chrome.storage.local.clear()
@@ -445,14 +452,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         setTimeout(function() {
           redirectUrl('https://botfat.com/home/onboarding/extension')
         }, 1500)
-        redirectUrl('https://botfat.com/home/onboarding/extension')
       })
       break;
     case 'connectBotFatUrlError':
-      showTopAlert('error','連結錯誤')
-      setTimeout(function() {
-        redirectUrl('https://botfat.com/home/onboarding/extension')
-      }, 1000)
+      showTopAlert('error','邀請碼錯誤')
+      // setTimeout(function() {
+      //   redirectUrl('https://botfat.com/home/onboarding')
+      // }, 1000)
       break;
     case 'createSuccess':
       showTopAlert('success', '串接成功')
@@ -657,6 +663,9 @@ function autoLoading(msg) {
   document.querySelector('.popup-mask').style.display = 'flex'
   document.querySelector('.popup-mask-retry').addEventListener('click', retryStep)
   document.querySelector('.popup-mask-stop').addEventListener('click', stopOnboard)
+  document.querySelector('.popup-mask-close').addEventListener('click', function(){
+    connectPort('switchVisibility', 'hidden')
+  })
 }
 function setLinkedOA() {
   autoLoading()
@@ -741,15 +750,18 @@ function onboardSuccess() {
       document.querySelector('.popup-end-userhead').src = info.head
     }
   })
+  chrome.storage.local.clear()
+  setTimeout(function() {
+    setEnterPage()
+  }, 3000)
   document.querySelector('.popup-end-close').addEventListener('click', function() {
     connectPort('switchVisibility', 'hidden')
-    chrome.storage.local.clear()
     setEnterPage()
   })
 }
 function restart() {
   chrome.storage.local.clear()
-  chrome.storage.local.set({stage: 'security'})
+  chrome.storage.local.set({stage: ''})
   hideItem(['.popup-alert', '.popup-video-img-provider', '.popup-video-img-account', '.popup-badge-blue', '.popup-badge-green', '.popup-btn-goback', '.popup-send-err-btnwrap-back'])
   showItem([
     { selector: '.popup-badge-gray' },

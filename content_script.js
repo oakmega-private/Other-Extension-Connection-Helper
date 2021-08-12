@@ -488,24 +488,27 @@ function setLiff() {
           input2.dispatchEvent(new Event('input'))
           break;
         case 'Scopes':
-          const option2 = block.querySelectorAll('section label.label')
-          option2[0].click()
-          option2[1].click()
+          setTimeout(function() {
+            const option2 = block.querySelectorAll('section label.label')
+            option2[0].click()
+            option2[1].click()
+          }, 1000)
           break;
         case 'Bot link feature':
           const option3 = block.querySelectorAll('section label.label')
-          for (let i = 0; i < option3.length; i++) {
-            if (option3[i].innerText.trim() == 'Off') {
-              option3[i].click()
-              break;
-            } else if (i == option3.length - 1 && option3[i].innerText.trim() !== 'Off') {
-              chrome.runtime.sendMessage({
-                msg: 'postErrorMsg',
-                stage: 'setCallback',
-                info: "[auto] can't set Bot link feature"            
-              })
-           }
-          }
+          option3[0].click()
+          // for (let i = 0; i < option3.length; i++) {
+          //   if (option3[i].innerText.trim() == 'On (Normal)') {
+          //     option3[i].click()
+          //     break;
+          //   } else if (i == option3.length - 1 && option3[i].innerText.trim() !== 'On (Normal)') {
+          //     chrome.runtime.sendMessage({
+          //       msg: 'postErrorMsg',
+          //       stage: 'setCallback',
+          //       info: "[auto] can't set Bot link feature"            
+          //     })
+          //  }
+          // }
           break;
       }
       if (i == field.length - 1) {
@@ -558,13 +561,17 @@ function setPublish() {
 }
 function verifyBotfatLogin() {
   if (document.readyState == 'complete') {
-    if (window.location.href.includes('https://botfat.com/home/onboarding')) {
+    if (window.location.href == 'https://botfat.com/home/onboarding/tools' || window.location.href == 'https://botfat.com/home/onboarding/tools/' || window.location.href.includes('https://botfat.com/home/onboarding/connect')) {
       const uuid = localStorage.getItem('onboarding_uuid')
       const gmail = localStorage.getItem('login_user_email')
       chrome.runtime.sendMessage({ 
         msg: 'botfatLoginSuccess',
         uuid,
         gmail
+      })
+    } else if (window.location.href.includes('https://botfat.com/home/onboarding')) {
+      chrome.runtime.sendMessage({
+        msg: 'inputInviteCode'
       })
     } else if (window.location.href.includes('https://botfat.com/home/')) {
       chrome.runtime.sendMessage({
@@ -592,12 +599,12 @@ function toConnection(data) {
       enterValue('#login-liff input', info.line_login_liff_id)
 
       setTimeout(function() {
-        document.querySelector('.connect-add').click()
+        document.getElementById('connect-add').click()
       }, 1000)
-      document.querySelector('.connect-has-created').addEventListener('DOMSubtreeModified', function() {
+      setTimeout(function() {
         chrome.runtime.sendMessage({msg: 'createSuccess'})
-      })
-    } else if (window.location.href.includes('https://accounts.google.com/o/oauth2/auth') || window.location.href.includes('https://botfat.com/login/?next=/home/connecting/') || window.location.href.includes('https://botfat.com/login/?next=/home/connecting')) {
+      }, 3000)
+    } else if (window.location.href.includes('https://accounts.google.com/o/oauth2/auth') || window.location.href.includes('https://botfat.com/login/?next=/home/onboarding/extension')) {
       return
     } else {
       chrome.runtime.sendMessage({msg: 'connectBotFatUrlError'})
