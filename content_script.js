@@ -248,7 +248,7 @@ function findOutChannel(name) {
 }
 function getChannelToken() {
   if (document.readyState == 'complete' && document.querySelector('.token-row')) {
-    if (document.querySelector('.token-row span').innerText) {
+    if (document.querySelector('.token-row span')) {
       chrome.runtime.sendMessage({msg: 'getChannelTokenComplete', token:document.querySelector('.token-row span').innerText })
     } else {
       createNewToken()
@@ -279,7 +279,7 @@ function createNewToken() {
   }
 }
 function getNewToken() {
-  if (document.querySelector('.token-row span').innerText) {
+  if (document.querySelector('.token-row span')) {
     chrome.runtime.sendMessage({msg: 'getChannelTokenComplete', token: document.querySelector('.token-row span').innerText})    
   } else {
     setTimeout(getNewToken, 1000)
@@ -491,24 +491,12 @@ function setLiff() {
           setTimeout(function() {
             const option2 = block.querySelectorAll('section label.label')
             option2[0].click()
-            option2[1].click()
+            // option2[1].click()
           }, 1000)
           break;
         case 'Bot link feature':
           const option3 = block.querySelectorAll('section label.label')
           option3[0].click()
-          // for (let i = 0; i < option3.length; i++) {
-          //   if (option3[i].innerText.trim() == 'On (Normal)') {
-          //     option3[i].click()
-          //     break;
-          //   } else if (i == option3.length - 1 && option3[i].innerText.trim() !== 'On (Normal)') {
-          //     chrome.runtime.sendMessage({
-          //       msg: 'postErrorMsg',
-          //       stage: 'setCallback',
-          //       info: "[auto] can't set Bot link feature"            
-          //     })
-          //  }
-          // }
           break;
       }
       if (i == field.length - 1) {
