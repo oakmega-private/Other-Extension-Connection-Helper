@@ -355,10 +355,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case 'inputInviteCode':
       showTopAlert('error', '請先輸入邀請碼')
       break;
-    case 'hasCreatedAccount':
-      chrome.storage.local.clear()
-      showDuplicate()
-      break;
+    // case 'hasCreatedAccount':
+    //   chrome.storage.local.clear()
+    //   showDuplicate()
+    //   break;
     case 'notLoginYet':
       showTopAlert('error', '連結失敗，請登入 OakMega 後再試')
       break;
@@ -531,24 +531,24 @@ function setSecurity() {
   nextBtn.classList.add('disable')
   setBtnId('security')
 }
-function showDuplicate() {
-  hideItem(['.popup-mask', '.popup-bottom-bar', '.popup-alert-light'])
-  showItem([
-    { selector: '.popup-alert-exclamation', state: 'inline' },
-    { selector: '.popup-send-err-btnwrap-back', state: 'flex' }
-  ])
-  document.querySelector('.popup-send-err-btnwrap-back', 'flex')
-  document.querySelector('.popup-alert-desc').innerText = '一個 OakMega 帳號只能連接一個 LINE 官方帳號喔！'  
-  showInstruct('duplicate')
-  document.querySelector('.popup-send-err-restart').addEventListener('click', function() {
-    restart()
-  })
-  document.querySelector('.popup-send-err-close').addEventListener('click', function() {
-    connectPort('switchVisibility', 'hidden')
-    hideItem(['.popup-alert', '.popup-send-err-btnwrap-back'])
-    setEnterPage()
-  })
-}
+// function showDuplicate() {
+//   hideItem(['.popup-mask', '.popup-bottom-bar', '.popup-alert-light'])
+//   showItem([
+//     { selector: '.popup-alert-exclamation', state: 'inline' },
+//     { selector: '.popup-send-err-btnwrap-back', state: 'flex' }
+//   ])
+//   document.querySelector('.popup-send-err-btnwrap-back', 'flex')
+//   document.querySelector('.popup-alert-desc').innerText = '一個 OakMega 帳號只能連接一個 LINE 官方帳號喔！'  
+//   showInstruct('duplicate')
+//   document.querySelector('.popup-send-err-restart').addEventListener('click', function() {
+//     restart()
+//   })
+//   document.querySelector('.popup-send-err-close').addEventListener('click', function() {
+//     connectPort('switchVisibility', 'hidden')
+//     hideItem(['.popup-alert', '.popup-send-err-btnwrap-back'])
+//     setEnterPage()
+//   })
+// }
 function chooseAccount() {
   hideItem(['.popup-security-check', '.popup-security-contract', '.popup-mask'])
   showItem([

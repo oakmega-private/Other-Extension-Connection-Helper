@@ -561,10 +561,6 @@ function verifyBotfatLogin() {
       chrome.runtime.sendMessage({
         msg: 'inputInviteCode'
       })
-    } else if (window.location.href.includes('https://botfat.com/home/')) {
-      chrome.runtime.sendMessage({
-        msg: 'hasCreatedAccount'
-      })
     } else {
       chrome.runtime.sendMessage({
         msg: 'notLoginYet'
