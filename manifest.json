@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "OakMega 串接小幫手",
   "description": "快速串接 OakMega 帳號",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "icons": {
     "16": "./img/botfat.png",
     "48": "./img/botfat.png",
