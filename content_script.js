@@ -45,7 +45,7 @@ chrome.runtime.onConnect.addListener(function(port) {
       getProviderList()
       break;
     case 'viewProviderList':
-      addBgMask()
+      // addBgMask()
       port.onMessage.addListener(function(msg) {
         setTimeout(function() {
           findOutChannel(msg)
@@ -299,6 +299,10 @@ function setNewLogin(name) {
             choices.forEach(item => {
               if (item.innerText.trim() == 'Taiwan') item.click()
             })
+            break;
+          case "Company or owner's country or region":
+            block.querySelector('select').selectedIndex = 67
+            block.querySelector('select').dispatchEvent(new Event('change'))
             break;
           case 'Channel name':
             block.querySelector('textarea').value = `${name} Login`.slice(0,20)
@@ -561,6 +565,8 @@ function verifyBotfatLogin() {
       chrome.runtime.sendMessage({
         msg: 'inputInviteCode'
       })
+    } else if (window.location.href.includes('https://botfat.com/home/channel')) {
+      redirectUrl('https://botfat.com/home/onboarding/extension')
     } else {
       chrome.runtime.sendMessage({
         msg: 'notLoginYet'
