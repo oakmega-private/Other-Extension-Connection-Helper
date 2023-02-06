@@ -114,7 +114,7 @@ function next() {
       getCurrentTabId(tabId => {
         var port = chrome.tabs.connect(tabId, {name: 'provider'});
         chrome.storage.local.get('line_id', function(item) {
-          const url = `https://botfat-yidc23zsiq-de.a.run.app/?bot=${item.line_id}`
+          const url = `https://line-bot.oakmega.ai/chatbot/${item.line_id}`
           port.postMessage(url)
         })
         port.onMessage.addListener(function(res) {
@@ -355,10 +355,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     case 'inputInviteCode':
       showTopAlert('error', '請先輸入邀請碼')
       break;
-    // case 'hasCreatedAccount':
-    //   chrome.storage.local.clear()
-    //   showDuplicate()
-    //   break;
+    case 'createAnotherAccount':
+      redirectUrl('https://botfat.com/home/onboarding')
+      break;
     case 'notLoginYet':
       showTopAlert('error', '連結失敗，請登入 OakMega 後再試')
       break;
@@ -642,6 +641,7 @@ function detectProvider() {
 function goIntoProvider(name) {
   connectPort('viewProviderList', name)
 }
+
 function getChannelToken() {
   autoLoading()
   chrome.storage.local.get('name', function(item) {

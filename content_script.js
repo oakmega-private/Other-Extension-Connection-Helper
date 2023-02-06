@@ -45,7 +45,7 @@ chrome.runtime.onConnect.addListener(function(port) {
       getProviderList()
       break;
     case 'viewProviderList':
-      // addBgMask()
+      addBgMask()
       port.onMessage.addListener(function(msg) {
         setTimeout(function() {
           findOutChannel(msg)
@@ -174,28 +174,23 @@ function setResType() {
     document.querySelectorAll('.custom-control-label')[0].click()
     setTimeout(confirmType, 1500)
   } else {
-    return setOther()
+    return goToDeveloper()
   }
 }
+
 function confirmType() {
-  if (document.querySelector('.btn-primary')) {
-    document.querySelector('.btn-primary').click()
-    setTimeout(setOther, 1500)
+  if (document.querySelectorAll('.switch-label').length) {
+    document.querySelectorAll('.switch-label')[2].click()
+    setTimeout(goToDeveloper, 1500)
   } else {
     setTimeout(confirmType, 1000)
   }
 }
-function setOther() {
-  label = document.querySelectorAll('.custom-control-label')
-  if (document.querySelectorAll('.form-group').length == 4) {
-    label[3].click()
-    label[5].click()
-    label[6].click()
-    chrome.runtime.sendMessage({msg: 'responseComplete'})
-  } else {
-    setTimeout(setOther, 1000)
-  }
+
+function goToDeveloper() {
+  chrome.runtime.sendMessage({msg: 'responseComplete'})
 }
+
 function getProviderList() {
   if (document.readyState == 'complete' && document.querySelectorAll('.drawer.providers ul li a').length) {
     const list = document.querySelectorAll('.drawer.providers ul li a')
@@ -355,7 +350,7 @@ function setLinkedOA(id) {
 }
 function findOptionIndex(id) {
   if (document.querySelectorAll('select').length) {
-    const options = document.querySelectorAll('select')[1].querySelectorAll('option')
+    const options = document.querySelectorAll('select')[2].querySelectorAll('option')
     for (let i = 0; i < options.length; i++) {
       const item = options[i]
       if (item.value == id) {
@@ -566,7 +561,9 @@ function verifyBotfatLogin() {
         msg: 'inputInviteCode'
       })
     } else if (window.location.href.includes('https://botfat.com/home/channel')) {
-      redirectUrl('https://botfat.com/home/onboarding/extension')
+      chrome.runtime.sendMessage({
+        msg: 'createAnotherAccount'
+      })
     } else {
       chrome.runtime.sendMessage({
         msg: 'notLoginYet'
